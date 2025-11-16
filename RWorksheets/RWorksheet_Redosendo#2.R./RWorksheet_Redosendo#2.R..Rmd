@@ -1,41 +1,131 @@
 ---
-title: "RWorksheet_Redosendo#2.R."
-output: html_document
+title: "RWorksheet_Redosendo#2.Rmd"
+author: "Kyle Edward B. Redosendo"
+date: "2025-11-16"
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r cars}
-summary(cars)
-```
-#1. Create a vector using : operator
-#a. Sequence from -5 to 5. Write the R code and its output. Describe its output.
 ```{r}
-vec <- -5 : 5
-vec
+#1 (a)
+x <- -5:5
+x
+#Output :  [1] -5 -4 -3 -2 -1  0  1  2  3  4  5
+#Description : A sequence of consecutive integers from -5 up to 5.
 ```
-#[1] 1 2 3 4 5 6 7
 
-#b. x <- 1:7. What will be the value of x?
 ```{r}
+#1 (b)
 x <- 1:7
 x
-```
-#output: [1] 1 2 3 4 5 6 7
+#Output : [1] 1 2 3 4 5 6 7
 
-#2.* Create a vector using seq() function
-a. seq(1, 3, by=0.2) # specify step size
-Write the R code and its output. Describe the output.
+```
+
 ```{r}
+#2
+vec2 <- seq(1, 3, by = 0.2)
+vec2
+#Output : [1] 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6 2.8 3.0
+#Description : Creates a sequence starting at 1, ending at 3, increasing by 0.2 each step.
+```
+```{r}
+#3 A factory has a census of its workers. There are 50 workers in total. The following list shows their ages:
+age <- c(34, 28, 22, 36, 27, 18, 52, 39, 42, 29, 35, 31, 27,
+         22, 37, 34, 19, 20, 57, 49, 50, 37, 46, 25, 17, 37, 43, 53, 41, 51, 35,
+         24,33, 41, 53, 40, 18, 44, 38, 41, 48, 27, 39, 19, 30, 61, 54, 58, 26,
+         18.)
 
-a <- seq(1, 3, by = 0.2)
-a
-#[1] 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6 2.8 3.0
+print(age[3])
+
+print(age[c(2,4)])
+
+print(age[-1])
+
+#Output
+#[1] 22
+#[1] 28 36
+#[1] 28 22 36 27 18 52 39 42 29 35 31 27 22 37 34 19 20 57 49 50 37 46 25 17
+#[25] 37 43 53 41 51 35 24 33 41 53 40 18 44 38 41 48 27 39 19 30 61 54 58 26
+#[49] 18
 ```
 
-#3. A factory has a census of its workers. There are 50 workers in total.
+```{r}
+#4
+x <- c("first"=3, "second"=0, "third"=9)
+x
+#Output
+#first second  third 
+# 3      0      9 
+```
+
+```{r}
+#5
+x <- -3:2
+x
+x[2] <- 0
+#Output : [1] -3 -2 -1  0  1  2
+#Description : The 2nd element (-2) is changed to 0.
+```
+
+```{r}
+#6
+month <- c("jan","feb","march","april","may","june")
+price <- c(52.50,57.25,60.00,65.00,74.25,54.00)
+liters <- c(25,30,40,50,10,45)
+
+fuel_data <- data.frame(month, price, liters)
+fuel_data
+
+avg_exp <- weighted.mean(price, liters)
+avg_exp
+#Output : [1] 59.2625
+#Description : The average fuel expenditure of Mr. Cruz from Jan to June is 59.2625
+```
+```{r}
+#7
+data <- c(length(rivers),
+          sum(rivers),
+          mean(rivers),
+          median(rivers),
+          var(rivers),
+          sd(rivers),
+          min(rivers),
+          max(rivers))
+data
+#Output : 
+#[1]    141.0000  83357.0000    591.1844    425.0000 243908.4086    493.8708
+#[7]    135.0000   3710.0000
+
+```
+```{r}
+#8
+
+celebrity <- c("Oprah Winfrey","Tiger Woods","J.K. Rowling")
+power_ranking <- c(1,2,3)
+pay <- c(260,90,40)
+
+#b
+power_ranking[3] <- 15
+pay[3] <- 90
+
+celebrity_data <- data.frame(celebrity, power_ranking, pay)
+celebrity_data
+
+#c Interpret the data. 
+#J.K. Rowling’s ranking changed to 15 and her pay updated to 90.
+#OUtput
+#Celebrity                power_ranking     pay
+#Oprah Winfrey                       1      260
+#Tiger Woods                         2       90
+#J.K. Rowling                       15       90
+
+
+```
+
 
 
 
