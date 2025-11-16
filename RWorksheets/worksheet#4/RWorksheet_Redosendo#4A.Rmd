@@ -1,0 +1,208 @@
+---
+title: "RWorksheet_Redosendo#4a"
+author: "Kyle Edward B. Redosendo"
+date: "2025-11-16"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#1. Create a data frame.
+
+shoe_data <- data.frame(
+
+ShoeSize = c(6.5, 9.0, 8.5, 8.5, 10.5, 7.0, 9.5, 7.0, 7.5, 7.5, 8.5, 10.5,
+13.0, 11.5, 8.5, 5.0, 10.0, 6.5, 7.5, 10.5, 8.0, 11.0, 9.0, 13.0),
+Height = c(66.0, 68.0, 64.5, 65.0, 70.0, 70.0, 71.0, 72.0, 64.0, 64.0, 67.0, 71.0,
+77.0, 72.0, 59.0, 60.0, 72.0, 66.0, 64.0, 69.0, 67.0, 70.0, 69.0, 70.0),
+Gender = c('F', 'F', 'F', 'F', 'M', 'F', 'F', 'F', 'F', 'F', 'F', 'M',
+'M', 'M', 'F', 'F', 'M', 'F', 'F', 'M', 'F', 'M', 'M', 'M')
+)
+shoe_data
+```
+
+```{r}
+#a. Describe the data.
+summary(shoe_data)
+
+#b. Create a subset by males and females with their corresponding shoe size and height.What its result? Show the R scripts.
+
+#females
+female_data <- subset(shoe_data, Gender == "F", select = c(ShoeSize, Height))
+female_data
+
+#males
+male_data <- subset(shoe_data, Gender == "M", select = c(ShoeSize, Height))
+male_data
+
+#c. Find the mean of shoe size and height of the respondents. Write the R scripts and its result.
+# Mean of respondents
+mean_shoe <- mean(shoe_data$ShoeSize)
+mean_height <- mean(shoe_data$Height)
+
+mean_shoe
+mean_height
+
+#d. Is there a relationship between shoe size and height? Why?
+# Correlation test
+correlation <- cor(shoe_data$ShoeSize, shoe_data$Height)
+correlation
+```
+
+```{r}
+#2. Construct character vector months to a factor with factor() and assign the result to factor_months_vector. Print out factor_months_vector and assert that R prints out the factor levels below the actual values.
+
+months_vector <- c("March","April","January","November","January",
+"September","October","September","November","August",
+"January","November","November","February","May","August",
+"July","December","August","August","September","November",
+"February","April")
+
+# Convert to factor
+factor_months_vector <- factor(months_vector)
+
+# Print the factor vector
+factor_months_vector
+
+#3. Then check the summary() of the months_vector and factor_months_vector. | Inter- pret the results of both vectors. Are they both equally useful in this case?
+
+# Summary of character vector
+summary(months_vector)
+
+# Summary of factor vector
+summary(factor_months_vector)
+
+```
+
+```{r}
+#4. Create a vector and factor for the table below.
+direction <- c("East", "West", "North")
+frequency <- c(1, 4, 3)
+
+# Create factor with specific order
+factor_data <- factor(direction, levels = c("East", "West", "North"))
+
+# Print the ordered factor
+print(factor_data)
+
+# Combine into a data frame
+table_data <- data.frame(Direction = factor_data, Frequency = frequency)
+print(table_data)
+```
+
+```{r}
+#5. Enter the data below in Excel with file name = import_march.csv
+#data <- read.table("import_march.csv", header = TRUE, sep = ",")
+#data
+```
+
+```{r}
+#6.Full Search
+if (interactive()) {
+mode <- tolower(trimws(readline("Enter mode ('r' for random, 'm' for manual): ")))
+} else {
+mode <- "r"
+}
+
+if (mode == "r") {
+chosen <- sample(1:50, 1)
+cat("Randomly chosen number:", chosen, "\n")
+} else if (mode == "m") {
+if (interactive()) {
+input <- readline("Enter an integer: ")
+chosen_num <- suppressWarnings(as.integer(input))
+if (is.na(chosen_num)) stop("Invalid input: please enter an integer.")
+chosen <- chosen_num
+} else {
+chosen <- 20
+cat("Default number selected for knitting:", chosen, "\n")
+}
+} else {
+stop("Invalid mode. Use 'r' or 'm'.")
+}
+
+if (chosen < 1 || chosen > 50) {
+cat("The number selected is beyond the range of 1 to 50\n")
+} else if (chosen == 20) {
+cat("TRUE\n")
+} else {
+cat("Selected number:", chosen, "\n")
+}
+```
+
+```{r}
+#7. Change
+min_bills <- function(price) {
+bills <- c(1000, 500, 200, 100, 50)
+count <- 0
+
+remaining <- price
+
+for (b in bills) {
+if (remaining >= b) {
+n <- remaining %/% b
+count <- count + n
+remaining <- remaining - n*b
+}
+}
+
+return(count)
+}
+
+# RUN PROGRAM
+
+# generate random price divisible by 50
+price <- sample(seq(50, 5000, by = 50), 1)
+cat("Price of snack:", price, "\n")
+cat("Minimum bills needed:", min_bills(price), "\n")
+```
+
+```{r}
+#8. The following is each student’s math score for one semester. Based on this, answer the following questions.
+
+Name <- c("Annie","Thea","Steve","Hanna")
+Grade1 <- c(85,65,75,95)
+Grade2 <- c(65,75,55,75)
+Grade3 <- c(85,90,80,100)
+Grade4 <- c(100,90,85,90)
+
+df <- data.frame(Name, Grade1, Grade2, Grade3, Grade4)
+df
+
+cat("\n--- b. average > 90 ---\n")
+# b. without rowMeans
+avg <- (df$Grade1 + df$Grade2 + df$Grade3 + df$Grade4) / 4
+
+for(i in 1:nrow(df)){
+if(avg[i] > 90){
+cat(df$Name[i], "'s average grade this semester is ", avg[i], ".\n", sep="")
+}
+}
+
+cat("\n--- c. test average < 80 ---\n")
+# c. without mean()
+testAvg <- c(
+sum(df$Grade1)/4,
+sum(df$Grade2)/4,
+sum(df$Grade3)/4,
+sum(df$Grade4)/4
+)
+
+for(i in 1:4){
+if(testAvg[i] < 80){
+cat("The", i, "th test was difficult.\n")
+}
+}
+
+cat("\n--- d. highest > 90 ---\n")
+# d. without max()
+for(i in 1:nrow(df)){
+highest <- sort(c(df$Grade1[i], df$Grade2[i], df$Grade3[i], df$Grade4[i]))[4]
+if(highest > 90){
+cat(df$Name[i], "'s highest grade this semester is ", highest, ".\n", sep="")
+}
+}
+```
