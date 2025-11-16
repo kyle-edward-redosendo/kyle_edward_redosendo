@@ -1,0 +1,131 @@
+---
+title: "RWorksheet_Redosendo#3b"
+author: "Kyle Edward B. Redosendo"
+date: "2025-11-16"
+output: 
+  pdf_document:
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# 1. Create a data frame using the table below
+
+## a. Write the codes
+```{r}
+df <- data.frame(
+  Respondents = 1:20,
+  Sex = c(2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2),
+  Fathers_Occupation = c(1,3,3,3,1,2,3,1,1,1,3,2,1,3,3,1,3,1,2,1),
+  Persons_at_Home = c(5,7,3,8,5,9,6,7,8,4,7,5,4,7,8,8,3,11,7,6),
+  Siblings_at_School = c(6,4,4,1,2,1,5,3,1,2,3,2,5,5,2,1,2,5,3,2),
+  Types_of_Houses = c(1,2,3,1,1,3,3,1,2,3,2,3,2,2,3,3,2,3,3,2)
+)
+```
+
+## b. Describe the data
+```{r}
+print("Data Frame:")
+df
+
+print("Structure of the Data:")
+str(df)
+
+print("Summary of the Data:")
+summary(df)
+```
+
+## c. Is the mean number of siblings attending 5?
+```{r}
+sibmean <- mean(df$Siblings_at_School)
+print(paste("Actual mean is:", sibmean))
+sibmean == 5
+```
+
+## d. Extract the 1st two rows
+```{r}
+subset_d <- df[1:2, ]
+subset_d
+```
+
+## e. Extract 3rd and 5th rows with 2nd and 4th columns
+```{r}
+subset_e <- df[c(3, 5), c(2, 4)]
+subset_e
+```
+
+## f. Select Types_of_Houses into a vector
+```{r}
+types_houses <- df$Types_of_Houses
+types_houses
+```
+
+## g. Select male respondents whose father is a farmer
+```{r}
+subset_g <- df[df$Sex == 1 & df$Fathers_Occupation == 1, ]
+subset_g
+```
+
+## h. Select female respondents with ≥ 5 siblings attending school
+```{r}
+subset_h <- df[df$Sex == 2 & df$Siblings_at_School >= 5, ]
+subset_h
+```
+
+# 2. Create an empty data frame
+```{r}
+df_empty <- data.frame(
+  Ints = integer(),
+  Doubles = double(),
+  Characters = character(),
+  Logicals = logical(),
+  Factors = factor(),
+  stringsAsFactors = FALSE
+)
+
+print("Structure of the empty dataframe:")
+str(df_empty)
+
+write.csv(df_empty, "HouseholdData.csv", row.names = FALSE)
+```
+
+## a. Describe the results
+The empty dataframe contains the correct column names and data types but **zero rows**.
+
+# 3. Import the CSV file
+```{r}
+house <- read.csv("HouseholdData.csv", header = TRUE)
+print("Imported CSV Data:")
+house
+```
+
+## b. Convert Sex (Male=1, Female=2)
+```{r}
+house$Sex <- factor(house$Sex, levels = c("Male", "Female"), labels = c(1,2))
+house$Sex
+```
+
+## c. Convert Types_of_Houses (Wood=1, Concrete=2, Semi-Congrete=3)
+```{r}
+house$Types_of_Houses <- factor(house$Types_of_Houses, levels = c("Wood", "Concrete", "Semi-Congrete"), labels = c(1,2,3))
+house$Types_of_Houses
+```
+
+## d. Convert Fathers_Occupation (Farmer=1, Driver=2, Others=3)
+```{r}
+house$Fathers_Occupation <- factor(house$Fathers_Occupation, levels = c("Farmer", "Driver", "Others"), labels = c(1,2,3))
+house$Fathers_Occupation
+```
+
+## e. Select all females whose father is a driver
+```{r}
+subset_3e <- subset(house, Sex == 2 & Fathers_Occupation == 2)
+subset_3e
+```
+
+## f. Select respondents with ≥ 5 siblings attending school
+```{r}
+subset_3f <- subset(df, Siblings_at_School >= 5)
+subset_3f
