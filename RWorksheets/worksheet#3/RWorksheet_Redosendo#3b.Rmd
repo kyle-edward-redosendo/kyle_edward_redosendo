@@ -2,7 +2,9 @@
 title: "RWorksheet_Redosendo#3b"
 author: "Kyle Edward B. Redosendo"
 date: "2025-11-16"
-output: pdf_document
+output: 
+  pdf_document:
+    latex_engine: xelatex
 ---
 
 ```{r setup, include=FALSE}
@@ -125,5 +127,5 @@ subset_3e
 
 ## f. Select respondents with ≥ 5 siblings attending school
 ```{r}
-subset_3f <- subset(house, Siblings_at_School >= 5)
+subset_3f <- subset(df, Siblings_at_School >= 5)
 subset_3f
