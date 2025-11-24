@@ -1,0 +1,161 @@
+---
+title: "RWorksheet_Redosendo#3b"
+author: "Kyle Edward B. Redosendo"
+date: "2025-11-16"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# 1. Create a data frame using the table below
+#a
+df <- data.frame(
+Respondents = 1:20,
+Sex = c(2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2),
+Fathers_Occupation = c(1,3,3,3,1,2,3,1,1,1,3,2,1,3,3,1,3,1,2,1),
+Persons_at_Home = c(5,7,3,8,5,9,6,7,8,4,7,5,4,7,8,8,3,11,7,6),
+Siblings_at_School = c(6,4,4,1,2,1,5,3,1,2,3,2,5,5,2,1,2,5,3,2),
+Types_of_Houses = c(1,2,3,1,1,3,3,1,2,3,2,3,2,2,3,3,2,3,3,2)
+)
+```
+
+```{r}
+#b
+print("Data Frame:")
+df
+
+print("Structure of the Data:")
+str(df)
+
+print("Summary of the Data:")
+summary(df)
+```
+
+```{r}
+# c. Mean siblings
+
+sibmean <- mean(df$Siblings_at_School)
+print(paste("Actual mean is:", sibmean))
+sibmean == 5
+```
+
+```{r}
+# d. Extract 1st two rows
+
+subset_d <- df[1:2, ]
+subset_d
+```
+
+```{r}
+# e. Extract 3rd & 5th rows, 2nd & 4th cols
+
+subset_e <- df[c(3, 5), c(2, 4)]
+subset_e
+```
+
+```{r}
+# f. Vector of Types_of_Houses
+
+types_houses <- df$Types_of_Houses
+types_houses
+```
+
+```{r}
+# g. Male respondents (Sex = 1) with farmer father (1)
+
+subset_g <- df[df$Sex == 1 & df$Fathers_Occupation == 1, ]
+subset_g
+```
+
+```{r}
+# h. Female respondents (2) with >=5 siblings in school
+
+subset_h <- df[df$Sex == 2 & df$Siblings_at_School >= 5, ]
+subset_h
+```
+
+```{r}
+# 2. Empty dataframe
+
+df_empty <- data.frame(
+Ints = integer(),
+Doubles = double(),
+Characters = character(),
+Logicals = logical(),
+Factors = factor(),
+stringsAsFactors = FALSE
+)
+
+print("Structure of the empty dataframe:")
+str(df_empty)
+```
+
+```{r}
+# 3. Import CSV (must be uploaded to Posit Cloud)
+
+house <- read.csv("HouseholdData.csv", header = TRUE)
+print("Imported CSV Data:")
+house
+```
+
+```{r}
+# 3b. Convert Sex
+
+house$Sex <- factor(house$Sex,
+levels = c(1,2),
+labels = c("Male","Female"))
+house$Sex
+```
+
+```{r}
+# 3c. Convert Types_of_Houses
+
+if ("Types_of_Houses" %in% names(house) && length(house$Types_of_Houses) > 0) {
+  house$Types_of_Houses <- factor(
+    house$Types_of_Houses,
+    levels = c(1, 2, 3),
+    labels = c("Wood", "Concrete", "Semi-Congrete")
+  )
+} else {
+  warning("Column 'Types_of_Houses' is missing or empty in the dataset.")
+}
+
+house$Types_of_Houses
+
+```
+
+```{r}
+# 3d. Convert Fathers_Occupation
+if ("Fathers_Occupation" %in% names(house) && length(house$Fathers_Occupation) > 0) {
+  house$Fathers_Occupation <- factor(
+    house$Fathers_Occupation,
+    levels = c(1, 2, 3),
+    labels = c("Farmer", "Driver", "Others")
+  )
+} else {
+  # If column missing or empty, create it with NAs of correct length
+  warning("Column 'Fathers_Occupation' is missing or empty. Filling with NA.")
+  house$Fathers_Occupation <- factor(rep(NA, nrow(house)))
+}
+
+house$Fathers_Occupation
+
+```
+
+```{r}
+# 3e. Female respondents with driver father
+
+subset_3e <- subset(house, Sex == "Female" & Fathers_Occupation == "Driver")
+subset_3e
+```
+
+```{r}
+# 3f. Respondents with >=5 siblings in school
+
+subset_3f <- subset(df, Siblings_at_School >= 5)
+subset_3f
+```
